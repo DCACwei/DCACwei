@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="DCacwei">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>野人传教士过河问题</title>
+  <script>
+
+  function out_con() {
+	var y = document.getElementById("y_num").value;
+	var c = document.getElementById("c_num").value;
+	var index=0;
+	var num=0;
+	var steps = new Array();
+	function state(left_y,left_c,boat_location,right_y,right_c){
+	this.left_y=left_y;
+	this.left_c=left_c;
+	this.boat_location=boat_location;
+    this.right_y=right_y;
+	this.right_c=right_c;
+	}
+	function display(www){
+	if(www.right_c == c && www.right_y == y){		
+		num++;
+		document.write("找到第"+num+"条路径");
+		document.write("<table><tr><th>L_野人</th><th>L_传教士</th><th>船(1:-1)</th><th>R_野人</th><th>R_传教士</th></tr>");
+		for(var i=0;i <= index ; i++)
+		{
+		    document.write("<tr><td align=\"center\">"+steps[i].left_y+"</td><td  align=\"center\">"+steps[i].left_c+"</td><td align=\"center\">"+steps[i].boat_location+"</td><td align=\"center\">"+steps[i].right_y+"</td><td align=\"center\">"+steps[i].right_c+"</td></tr>");
+		}
+	      document.write("</table>");
+	      return;
+	     }
+
+	for(var i = 0; i < index; i++)
+	{
+	if(www.left_c == steps[i].left_c && www.left_y == steps[i].left_y)
+	{
+		if(www.boat_location == steps[i].boat_location)
+		{
+		  return;
+		}
+
+	}
+	}
+
+    if(www.left_c < 0 || www.left_y < 0 || www.right_c < 0 || www.right_y < 0)
+	{
+	  return;
+	}
+
+	if((www.left_c < www.left_y && www.left_c != 0) || (www.right_c < www.right_y && www.right_c != 0) )
+	{
+	  return;
+	}
+
+	tt = new state(0,0,1,0,0);
+
+	tt.left_c = www.left_c - 2 * www.boat_location;
+	tt.left_y = www.left_y;
+	tt.right_c = www.right_c + 2 * www.boat_location;
+	tt.right_y = www.right_y;
+	tt.boat_location = ( -1*www.boat_location);
+	index = index + 1;
+	steps[index] = tt;
+	display(steps[index]);
+	index = index - 1;
+
+	tt.left_c = www.left_c;
+	tt.left_y = www.left_y - 2 * www.boat_location;
+	tt.right_c = www.right_c ;
+	tt.right_y = www.right_y + 2 * www.boat_location;
+	tt.boat_location = ( -1*www.boat_location);
+	index = index + 1;
+	steps[index] = tt;
+	display(steps[index]);
+	index = index-1;
+
+	tt.left_c =www.left_c -1 * www.boat_location;
+	tt.left_y = www.left_y -1 * www.boat_location;
+	tt.right_c = www.right_c + 1 *www.boat_location;
+	tt.right_y = www.right_y + 1 * www.boat_location;
+	tt.boat_location = ( -1*www.boat_location);
+	index = index + 1;
+	steps[index] = tt;
+	display(steps[index]);
+	index = index-1;
+
+	tt.left_c = www.left_c - 1 * www.boat_location;
+	tt.left_y = www.left_y;
+	tt.right_c = www.right_c + 1 * www.boat_location;
+	tt.right_y = www.right_y;
+	tt.boat_location = ( -1*www.boat_location);
+	index = index + 1;
+	steps[index] = tt;
+	display(steps[index]);
+	index = index-1;
+
+	tt.left_c = www.left_c;
+	tt.left_y = www.left_y - 1 *www.boat_location;
+	tt.right_c = www.right_c;
+	tt.right_y = www.right_y + 1 * www.boat_location;
+	tt.boat_location = ( -1*www.boat_location);
+	index = index + 1;
+	steps[index] = tt;
+	display(steps[index]);
+	index = index-1;
+
+  	return;
+	}
+	steps[index] = new state(y,c,1,0,0);
+if(y>c){
+	alert("输入信息不满足传教士人数不少于野人人数！");
+}else{
+	display(steps[index]);
+  }
+	
+}
+</script>
+ </head>
+ <body>
+  <h1 align="center">野人人数：<input type="text" id="y_num"><br>
+  传教士人数: <input type="text" id="c_num"><br>
+  <div align="center"><button onclick="out_con()">运行结果</button></h1>
+</div>
+<p id="demo"></p>
+ </body>
+</html>
